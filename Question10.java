@@ -1,15 +1,17 @@
+package com.company;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
-/* Q10. Design classes having attributes and method(only skeleton) for a coffee shop. 
+/* Q10. Design classes having attributes and method(only skeleton) for a coffee shop.
 There are three different actors in our scenario and i have listed the different actions they do also below
 
 * Customer
   - Pays the cash to the cashier and places his order, get a token number back
   - Waits for the intimation that order for his token is ready
   - Upon intimation/notification he collects the coffee and enjoys his drink
-  ( Assumption:  Customer waits till the coffee is done, he wont timeout and cancel the order. 
+  ( Assumption:  Customer waits till the coffee is done, he wont timeout and cancel the order.
   Customer always likes the drink served. Exceptions like he not liking his coffee,
    he getting wrong coffee are not considered to keep the design simple.)
 
@@ -17,7 +19,7 @@ There are three different actors in our scenario and i have listed the different
   - Takes an order and payment from the customer
   - Upon payment, creates an order and places it into the order queue
   - Intimates the customer that he has to wait for his token and gives him his token
-  ( Assumption: Token returned to the customer is the order id. Order queue is unlimited. 
+  ( Assumption: Token returned to the customer is the order id. Order queue is unlimited.
   With a simple modification, we can design for a limited queue size)
 
 * Barista
@@ -35,38 +37,38 @@ class Token{
     }
     public static Token getToken(String name){
         return new Token(name);
-    } 
+    }
     public String getTokenid(){
         return this.tokenid;
     }
 }
 class Coffee{
 
-    private int Coffeeid;
-    private String Coffeename;
-    private  int Coffeeprice;
+    private int coffeeid;
+    private String coffeename;
+    private  int coffeeprice;
 
-    Coffee(int id, String name , int price){
-        this.Coffeeid=id;
-        this.Coffeename=name;
-        this.Coffeeprice=price;
+    public Coffee(int id, String name , int price){
+        this.coffeeid=id;
+        this.coffeename=name;
+        this.coffeeprice=price;
     }
 
     public int getCoffeeprice(){
-        return this.Coffeeprice;
+        return this.coffeeprice;
     }
 }
 
 class OrderQueue{
-    private static ArrayList<Order> orderlist;
+    private static LinkedList<Order> orderlist;
     private static int counter;
     private static int first;
     static {
         counter=0;
-        orderlist=new ArrayList<>();
+        orderlist=new LinkedList<>();
         first=0;
     }
-    
+
     public int getTotalOrderCount(){
         return counter;
     }
@@ -74,7 +76,7 @@ class OrderQueue{
     public static void setOrderQueue(Order o){
         counter++;
         orderlist.add(o);
-        System.out.println("Order addded to Queue "+ counter);
+        System.out.println("Order added to Queue "+ counter);
     }
     public static Order getOrderFromQueue(){
         if(counter!=0 && first < counter){
@@ -83,7 +85,7 @@ class OrderQueue{
         }
         return null;
     }
-    
+
 }
 
 
@@ -145,7 +147,7 @@ class Customer{
         this.T=t;
         System.out.println("Your token number : "+this.T);
     }
-    
+
 }
 
 class Cashier{
@@ -157,12 +159,12 @@ class Cashier{
     }
     public Order createOrder(Customer c,int price){
         Order order1=null;
-        
+
 
         Coffee c1 =new Coffee(101,"Cold Coffee" ,100);
         Coffee c2 =new Coffee(102,"Hot Coffee" ,150);
-        
-        List<Coffee> list = new ArrayList<Coffee>();
+
+        List<Coffee> list = new LinkedList<Coffee>();
         list.add(c1);
         list.add(c2);
 
@@ -177,8 +179,8 @@ class Cashier{
         System.out.println("Cashier : "+this.id);
         Order o=this.createOrder(c,price);
 
-        
-        
+
+
         if(o==null){
             System.out.println("Order not created!!!!");
         }
